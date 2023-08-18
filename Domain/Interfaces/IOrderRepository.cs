@@ -7,6 +7,6 @@ namespace Domain.Interfaces
     {
         Order GetById(int orderId);
 
-        Order CreateOrder(OrderPostDto order);
+        int CreateOrder(OrderPostDto order);
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.EF.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230818140307_Initial")]
-    partial class Initial
+    [Migration("20230818194815_spCreateOrderWithProducts")]
+    partial class spCreateOrderWithProducts
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,7 @@ namespace DataAccess.EF.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            OrderDate = new DateTime(2023, 8, 18, 11, 3, 7, 107, DateTimeKind.Local).AddTicks(4636)
+                            OrderDate = new DateTime(2023, 8, 18, 16, 48, 14, 938, DateTimeKind.Local).AddTicks(8155)
                         });
                 });
 

@@ -252,7 +252,7 @@ namespace DataAccess.EF.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "Id", "CustomerId", "OrderDate" },
-                values: new object[] { 1, 1, new DateTime(2023, 8, 18, 11, 3, 7, 107, DateTimeKind.Local).AddTicks(4636) });
+                values: new object[] { 1, 1, new DateTime(2023, 8, 18, 16, 45, 50, 275, DateTimeKind.Local).AddTicks(9478) });
 
             migrationBuilder.InsertData(
                 table: "OrderDetails",

@@ -45,7 +45,7 @@ namespace WebApi.Controllers
             try
             {
                 var createdOrder = _orderService.CreateOrder(order);
-                return Ok();
+                return Created(createdOrder.Id.ToString(), createdOrder);
             }
             catch (Exception ex)
             {

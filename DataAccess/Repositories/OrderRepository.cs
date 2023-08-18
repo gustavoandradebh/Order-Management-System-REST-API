@@ -1,4 +1,6 @@
-﻿using Domain.DTOs;
+﻿using System.Data;
+
+using Domain.DTOs;
 using Domain.Entities;
 using Domain.Interfaces;
 
@@ -22,20 +24,35 @@ namespace DataAccess.EF.Repositories
             return order;
         }
 
-        public Order CreateOrder(OrderPostDto order)
+        public int CreateOrder(OrderPostDto order)
         {
-            SqlParameter orderItems = new SqlParameter("@OrderItems", System.Data.SqlDbType.Structured)
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ProductId", typeof(int));
+            dt.Columns.Add("Quantity", typeof(int));
+
+            foreach (var item in order.OrderItems)
             {
-                TypeName = "dbo.OrderItems",
-                Value = order.OrderItems.ToArray()
+                dt.Rows.Add(item.ProductId, item.Quantity);
+            }
+
+            SqlParameter orderItems = new SqlParameter("@OrderDetails", System.Data.SqlDbType.Structured)
+            {
+                TypeName = "dbo.OrderDetailType",
+                Value = dt
+            };
+            SqlParameter orderIDParameter = new SqlParameter("@NewOrderID", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
             };
 
-            _context.Orders.FromSqlRaw("EXECUTE dbo.CreateOrder @customerId, @orderDate, @orderItems", 
-                new SqlParameter("@customerId", order.CustomerId),
-                new SqlParameter("@orderDate", order.OrderDate),
-                orderItems);
+            _context.Database.ExecuteSqlRaw("EXECUTE dbo.spCreateOrderWithProducts @CustomerId, @OrderDate, @OrderDetails, @NewOrderID OUTPUT",
+                       new SqlParameter("@CustomerID", order.CustomerId),
+                       new SqlParameter("@OrderDate", order.OrderDate),
+                       orderItems,
+                       orderIDParameter);
 
-            return null;
+            var newOrderID = Convert.ToInt32(orderIDParameter.Value);
+            return newOrderID;
         }
 
     }
