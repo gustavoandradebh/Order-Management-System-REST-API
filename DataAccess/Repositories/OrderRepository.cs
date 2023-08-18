@@ -47,7 +47,7 @@ namespace DataAccess.EF.Repositories
 
             _context.Database.ExecuteSqlRaw("EXECUTE dbo.spCreateOrderWithProducts @CustomerId, @OrderDate, @OrderDetails, @NewOrderID OUTPUT",
                        new SqlParameter("@CustomerID", order.CustomerId),
-                       new SqlParameter("@OrderDate", order.OrderDate),
+                       new SqlParameter("@OrderDate", DateTime.UtcNow),
                        orderItems,
                        orderIDParameter);
 

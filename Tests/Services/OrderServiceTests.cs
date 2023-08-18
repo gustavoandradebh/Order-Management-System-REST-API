@@ -32,8 +32,7 @@ namespace Tests.Services
                         Quantity = 1
                     }
                 },
-                CustomerId = 1,
-                OrderDate = DateTime.Now
+                CustomerId = 1
 
             };
             _unitOfWork.Setup(x => x.Products.GetAll()).Returns(new List<Product>().AsQueryable());
@@ -58,8 +57,7 @@ namespace Tests.Services
                         Quantity = 0
                     }
                 },
-                CustomerId = 1,
-                OrderDate = DateTime.Now
+                CustomerId = 1
 
             };
             var product = new Product
@@ -90,8 +88,7 @@ namespace Tests.Services
                         Quantity = 10
                     }
                 },
-                CustomerId = 999,
-                OrderDate = DateTime.Now
+                CustomerId = 999
 
             };
             var product = new Product
