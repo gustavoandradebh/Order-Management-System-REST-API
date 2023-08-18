@@ -11,21 +11,31 @@ namespace WebApi.Controllers
     [ApiController]
     public class OrderController : Controller
     {
+        private readonly ILogger<OrderController> _logger;
         private readonly IOrderService _orderService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ILogger<OrderController> logger)
         {
             _orderService = orderService;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult GetOrderById([FromQuery] int orderId)
         {
-            var order = _orderService.FindById(orderId);
-            if (order is null)
-                return NotFound();
+            try
+            {
+                var order = _orderService.FindById(orderId);
+                if (order is null)
+                    return NotFound();
 
-            return Ok(order);
+                return Ok(order);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error on GetOrderById: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize(Roles = UserRoles.PowerUser)]
@@ -39,6 +49,7 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("Error on CreateOrder: " + ex.Message);
                 return BadRequest(ex.Message);
             }
         }

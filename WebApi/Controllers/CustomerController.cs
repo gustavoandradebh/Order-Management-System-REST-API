@@ -9,20 +9,29 @@ namespace WebApi.Controllers
     [ApiController]
     public class CustomerController : Controller
     {
+        private readonly ILogger<CustomerController> _logger;
         private readonly ICustomerService _customerService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, ILogger<CustomerController> logger)
         {
             _customerService = customerService;
+            _logger = logger;
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult GetAll([FromQuery] int? pageSize, [FromQuery] int? pageNumber)
         {
-            var customers = _customerService.GetAll(pageSize, pageNumber);
-
-            return Ok(customers);
+            try
+            {
+                var customers = _customerService.GetAll(pageSize, pageNumber);
+                return Ok(customers);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Error on GetAll Customers: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
