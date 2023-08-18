@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs;
+using Domain.Entities;
 using Domain.Interfaces;
 
 namespace Service;
@@ -14,7 +15,10 @@ public class OrderService : IOrderService
 
     public OrderDto CreateOrder(OrderPostDto order)
     {
+        ValidateOrder(order);
+
         _unitOfWork.Orders.CreateOrder(order);
+        
         return null;
     }
 
@@ -40,5 +44,21 @@ public class OrderService : IOrderService
         };
 
         return orderDto;
+    }
+
+    private void ValidateOrder(OrderPostDto order)
+    {
+        var productIds = new HashSet<int>(_unitOfWork.Products.GetAll().Select(p => p.Id));
+        foreach (var productId in order.OrderItems.Select(i => i.ProductId))
+        {
+            if (!productIds.Contains(productId))
+                throw new ArgumentException($"Product with id {productId} does not exist");
+        }
+
+        foreach (var orderItem in order.OrderItems)
+        {
+            if (orderItem.Quantity <= 0)
+                throw new ArgumentException($"Quantity for product with id {orderItem.ProductId} must be positive");
+        }
     }
 }

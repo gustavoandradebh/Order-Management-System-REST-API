@@ -32,8 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult CreateOrder([FromBody] OrderPostDto order)
         {
-            var createdOrder = _orderService.CreateOrder(order);
-            return Ok();
+            try
+            {
+                var createdOrder = _orderService.CreateOrder(order);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -8,12 +8,14 @@ public class UnitOfWork: IUnitOfWork
     private readonly ApplicationContext _context;
     public IOrderRepository Orders { get; private set; }
     public IProductRepository Products { get; private set; }
+    public ICustomerRepository Customers { get; private set; }
 
     public UnitOfWork(ApplicationContext context)
     {
         _context = context;
         Orders = new OrderRepository(_context);
         Products = new ProductRepository(_context);
+        Customers = new CustomerRepository(_context);
     }
 
     public int Complete() => _context.SaveChanges();

@@ -10,6 +10,7 @@ namespace Domain.Interfaces
     {
         IOrderRepository Orders { get; }
         IProductRepository Products { get; }
+        ICustomerRepository Customers { get; }
         int Complete();
     }
 }
