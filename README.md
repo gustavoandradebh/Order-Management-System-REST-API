@@ -2,9 +2,7 @@
 
 # Gustavo de Oliveira Andrade Restani
 
-API made for the Senior C# .NET developer position on Sierra Interactive, based on the following assessments:  
-
-- https://torc.coderbyte.com/sl-candidate?inviteKey=58BgO9xdDf
+API made for the Senior C# .NET developer position on Sierra Interactive.
 
 The API was built using:
 - .NET 7.0 implementing Repository and Unit Of Work patterns
@@ -98,7 +96,15 @@ This will give you a Bearer token for you to use to authenticate on the API.
 
 # Critique
 
-For the development of this project, I implemented an API based on the Repository and Unit Of Work patterns, not only because the assigment asked to, but also due to its layer implementation, testability and practicality. An application like this relies heavily on database read and write operations, and if we decide to change the database or adding another one, this architecture makes it easy to achieve that.
+The API was constructed using the Repository and Unit Of Work patterns, which I believe constitutes a robust architectural choice. This approach not only ensured the maintenance of a well-organized codebase but also amplified its testability and practicality. By breaking down data access into repositories and managing units of work, the project is adaptable for potential future database changes.
 
-I hope I had covered all the requirements, however, if I had more time, I would improve the POST validations, adding more edge cases, implementing FluentValidation library and adding more unit tests and integration tests to cover those cases. 
+For managing database interactions, I employed Entity Framework Core. This framework streamlined operations within the SQL Server environment and abstracted away complex data tasks, contributing to a more manageable development process. In terms of security, I implemented ASP.NET Identity in conjunction with JWT and role-based authorization. This combination enabled a strong focus on effective user management and rigorous access control.
+
+The integration of SQL migrations to manage schema alterations and stored procedures aligns seamlessly with industry standards, ensuring the seamless updating of the database. The incorporation of XUnit and Moq for testing provides assurance of reliable code performance. While I'm aware that there's potential for enhancement in terms of testing and validation, a robust foundation and architecture has already been laid.
+
+The inclusion of NLog for comprehensive logging has enhanced the project's stability. Furthermore, the integration of tools like Swagger, Postman, and Docker guarantees the provision of user-friendly documentation, efficient testing, and streamlined deployment practices.
+
+In summary, I hope to have effectively showcased some good architectural decisions, comprehensive security measures, a diligent testing approach, and a state of deployment readiness through this project. 
+
+Thank you for your time and the opportunity. I'm excited to receive your insights and critiques on this project.
 
